@@ -1,4 +1,4 @@
-// Edith Elena Herrera Ramírez			HR103216
+// Edith Elena Herrera RamÃ­rez			HR103216
 
 #include <iostream> // Entrada/salida
 #include <array> // Arreglos
@@ -19,12 +19,12 @@ array<string, ELEMENTOS> franquicias = {
 "The Sims", "Tomb Raider", "Uncharted"
 };
 // Elige al azar uno de los elementos del arreglo
-string elegirElemento(array<string, SIZE> &arr);
+string elegirElemento(array<string, ELEMENTOS> &arr);
 // Inicializa la palabra del jugador con guiones bajos
 // Devuelve la cantidad de letras a adivinar en la palabra
 int inicializarRespuesta(char respuesta[], string palabra);
 // Solicita al usuario que ingrese una letra
-// y la devuelve a la función desde donde se invoca
+// y la devuelve a la funciÃ³n desde donde se invoca
 char pedirLetra(char respuesta[]);
 // Valida si la letra ingresada es parte de la palabra
 int validarLetra(char respuesta[], string palabra, char letra);
@@ -35,7 +35,7 @@ void jugar();
 // Elegir una opcion de menu
 int elegirOpcion();
 // Realizar busqueda binaria en un arreglo
-int busquedaBinaria(array<string, SIZE> &arr, string valor);
+int busquedaBinaria(array<string, ELEMENTOS> &arr, string valor);
 // Busca una franquicia ingresada por el usuario en el arreglo de franquicias
 void buscarFranquicia();
 
@@ -51,7 +51,7 @@ int main() {
           buscarFranquicia();
           break;
       }
-      //cout « endl;
+      //cout Â« endl;
       opcion = elegirOpcion();
    }
    cout << "Que tengas un buen dia." << endl; 
@@ -86,8 +86,7 @@ void jugar() {
 
     cout << "Jugar al ahorcado" << endl;
     while (letrasRestantes > 0 && intentosFallidos < 7) {
-        letra = 'l'; 
-		//pedirLetra(respuesta);
+        letra = pedirLetra(respuesta);
         letrasCorrectas = validarLetra(respuesta, palabra, letra); 
         if (letrasCorrectas > 0) {
         	letrasRestantes -= letrasCorrectas;
@@ -113,12 +112,12 @@ int inicializarRespuesta(char respuesta[], string palabra){
     		respuesta[i] = caracter;
 		}
 	}
-	respuesta[lomgitudPalabra] = '\0';
+	respuesta[longitudPalabra] = '\0';
 	return cantidadLetras;
 }
 
 // Elige al azar uno de los elementos del arreglo
-string elegirElemento(array<string, SIZE> &arr) {
+string elegirElemento(array<string, ELEMENTOS> &arr) {
    // variable estatica, "recuerda" su valor
    // se usa para plantar la semilla en el generador 
    // de numeros aleatorios solo una vez
@@ -134,24 +133,11 @@ string elegirElemento(array<string, SIZE> &arr) {
 }
 
 char pedirLetra( char respuesta[]){
-	// funcion que lea una letra y la devuelva a la función main
-	int letra;
-	cout << "Escriba una letra: ";
-	
-	cout << cin;
-	/*
-	//Valida que la entrada sea un entero
-	while(!(cin >> numero) || (numero < min || numero >= max)){
-		cin.clear(); //Limpia la entrada estandar
-		cin.ignore(10000, '\n'); //descarta la entrada hasta encontrar un salto de linea
-		cout << mensajeError << endl; //muestra un mensaje de error
-		cout << indicacion << ": "; //Le da otra oportunidad al usuario
-	}
-	
-	*/
-	
+	// funcion que lea una letra y la devuelva a la funciÃ³n main
+	char letra;
+	cout << "Escriba una letra: \n";
+  	cin >> letra;	
 	return letra;
-	
 }
 
 int validarLetra(char respuesta[], string palabra, char letra) {
@@ -189,9 +175,25 @@ void dibujarAhorcado(int errores, int letrasRestantes, string palabra) {
 	}
 }
 
-int busquedaBinaria(array<string, SIZE> &arr, string valor) {
-	// Implemente la función búsqueda binaria, para devolver el índice en
+int busquedaBinaria(array<string, ELEMENTOS> &arr, string valor) {
+	// Implemente la funciÃ³n bÃºsqueda binaria, para devolver el Ã­ndice en
  	// el que se encuentra el valor o -1 si este no existe en el arreglo
+ 	int inf = 0;
+ 	int sup = ELEMENTOS-1;
+ 	int med;
+	int indice = -1;
+	
+	while(inf <= sup){
+		med = inf + ((sup-inf)/2);
+		if(valor<franquicias[med]) sup=med-1; 
+		else if(valor>franquicias[med]) inf=med+1;
+		else{
+			indice = med;
+			break;
+		}
+	}
+	 return indice;
+	
 }
 
 void buscarFranquicia() {
@@ -207,8 +209,6 @@ void buscarFranquicia() {
 	else
 	cout << "Su franquicia no es tan comercial, sus gustos son refinados." << endl;
 }
-
-
 
 
 
